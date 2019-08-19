@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- load the properties file: sport.properties -->
+    <context:property-placeholder location="classpath:properties.txt"/>
     <!-- bean definitions here -->
 
     <!-- Define your beans here -->
@@ -18,9 +23,21 @@
         <constructor-arg ref = "myFortuneService"></constructor-arg>
     </bean>
 
+    <!-- Constructor Dependence Injection example -->
     <bean id="myBaseballCoach"
           class="com.springioc.example.BaseballCoach">
             <constructor-arg ref = "myFortuneService"></constructor-arg>
+    </bean>
+
+    <!-- Setter Injection using xml example -->
+    <!-- Setting values -->
+    <bean id="mySwimCoach"
+          class="com.springioc.example.SwimCoach">
+        <property name="fortuneService" ref="myFortuneService"></property>
+        <property name="email" value="sandeep@gmail.com"></property>
+        <property name="team" value="SJ Smashers"></property>
+        <!-- property from properties file -->
+        <property name="phone" value="${phone}"></property>
     </bean>
 
 </beans>
